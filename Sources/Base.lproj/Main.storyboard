@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Ei-SN-WH5">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Top Subreddit View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" userLabel="Top Subreddit View Controller" customClass="SubredditViewController" customModule="Narwhal" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="HJ9-WK-F2z"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="path" value="top"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137" y="45"/>
+        </scene>
+        <!--Best-->
+        <scene sceneID="Ycm-nH-mBJ">
+            <objects>
+                <navigationController storyboardIdentifier="BestNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VIp-nh-SNR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Best" image="Square" id="sBb-uh-oOE"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="k49-4E-grv">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Xn3-cC-dT3" kind="relationship" relationship="rootViewController" id="saE-LC-RqR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jqs-y5-JX3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-746" y="741"/>
+        </scene>
+        <!--Best Subreddit View Controller-->
+        <scene sceneID="NYp-iT-p6I">
+            <objects>
+                <viewController id="Xn3-cC-dT3" userLabel="Best Subreddit View Controller" customClass="SubredditViewController" customModule="Narwhal" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="yDP-BR-4RP"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="path" value="best"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MxR-bo-zC8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137" y="741"/>
+        </scene>
+        <!--New-->
+        <scene sceneID="69e-qO-V6q">
+            <objects>
+                <navigationController storyboardIdentifier="NewNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uGO-dv-CJV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="New" image="Square" id="uTy-hG-LSa"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SpZ-Py-K64">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1fe-Ye-KNZ" kind="relationship" relationship="rootViewController" id="Xey-f0-YXD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NuH-jV-fsF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-746" y="1447"/>
+        </scene>
+        <!--New Subreddit View Controller-->
+        <scene sceneID="Dul-l5-bIi">
+            <objects>
+                <viewController id="1fe-Ye-KNZ" userLabel="New Subreddit View Controller" customClass="SubredditViewController" customModule="Narwhal" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="33B-r3-58o"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="path" value="new"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7xa-Rg-wnl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137" y="1447"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="WCd-Tq-hMj">
+            <objects>
+                <tabBarController storyboardIdentifier="RootTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3Ei-SN-WH5" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GOR-k1-eUo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBar>
+                    <connections>
+                        <segue destination="J5f-xo-V4k" kind="relationship" relationship="viewControllers" id="v56-iL-Co8"/>
+                        <segue destination="VIp-nh-SNR" kind="relationship" relationship="viewControllers" id="u7Y-G0-lYz"/>
+                        <segue destination="uGO-dv-CJV" kind="relationship" relationship="viewControllers" id="kxS-8g-sEE"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xp7-hU-ZrR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1770" y="851"/>
+        </scene>
+        <!--Top-->
+        <scene sceneID="Wvr-my-j0I">
+            <objects>
+                <navigationController storyboardIdentifier="TopNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="J5f-xo-V4k" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Top" image="Square" id="QgJ-ln-L2U"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="T0A-Bc-qOX">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="AY8-YB-oex"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fyF-MO-GII" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-746" y="45"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Square" width="15" height="15"/>
+    </resources>
+    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+</document>
