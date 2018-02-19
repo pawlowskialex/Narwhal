@@ -61,7 +61,6 @@ class SubredditPaginator {
                 else { return }
             
             self.append(listing: next)
-            self.reloadPosts()
         }
     }
     
