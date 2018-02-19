@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/pawlowskialex/Narwhal/raw/develop/Sources/Supporting%20Files/Assets.xcassets/AppIcon.appiconset/App%20Icon%2060%20x%2060%403x.png" width="20%">
+</p>
+
 # Narwhal
 
 *A bulletproof, buttery-smooth Reddit client*
