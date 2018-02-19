@@ -43,12 +43,10 @@ class SubredditPaginator {
         return true
     }
     
-    func reload(reset: Bool = true) {
+    func reload() {
         queue.async {
             self.pages = []
             self.append(listing: self.api.listing(request: self.request, limit: 50))
-            
-            if reset { self.reloadPosts() }
         }
     }
     

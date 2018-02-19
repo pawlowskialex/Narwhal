@@ -58,11 +58,11 @@ class SubredditViewController: UITableViewController {
     }
     
     private func setupViewModel() {
-        viewModel.nodes
+        viewModel.state
             .subscribe(target: self, onNext: { $0.reload(with: $1) })
             .disposed(by: disposeBag)
         
-        viewModel.updateBounds(view.bounds.size)
+        viewModel.updateSize(view.bounds.size)
     }
     
     private func reload(with state: SubredditViewModel.State) {
@@ -84,7 +84,7 @@ class SubredditViewController: UITableViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { _ in self.viewModel.updateBounds(size) })
+        coordinator.animate(alongsideTransition: { _ in self.viewModel.updateSize(size) })
     }
 
     // MARK: - Table view data source
@@ -221,11 +221,11 @@ class SubredditViewController: UITableViewController {
     private let disposeBag = DisposeBag()
 }
 
-// MARK: - SubredditViewController UIRefreshControl
+// MARK: - SubredditViewController - UIRefreshControl
 
 extension SubredditViewController {
     @objc fileprivate func beginRefreshing(sender: UIRefreshControl) {
-        self.viewModel.reload(reset: false)
+        self.viewModel.reload()
     }
 }
 

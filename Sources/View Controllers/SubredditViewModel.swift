@@ -16,8 +16,44 @@ class SubredditViewModel {
     private let queue = DispatchQueue(label: "org.pawlowski.Reddit.subreddit.viewModel",
                                        qos: .userInteractive)
     
-    private var posts: [RedditPost] = []
-    private var bounds: CGSize = .zero
+    private enum BackingState {
+        case loading(size: CGSize)
+        case loaded(size: CGSize, posts: [RedditPost], moreAvailable: Bool)
+        
+        func with(size: CGSize) -> BackingState {
+            switch self {
+            case .loading:
+                return .loading(size: size)
+            case .loaded(_, let posts, let moreAvailable):
+                return .loaded(size: size,
+                               posts: posts,
+                               moreAvailable: moreAvailable)
+            }
+        }
+        
+        func with(posts: [RedditPost], moreAvailable: Bool) -> BackingState {
+            switch self {
+            case .loading(let size), .loaded(let size, _, _):
+                return .loaded(size: size,
+                               posts: posts,
+                               moreAvailable: moreAvailable)
+            }
+        }
+        
+        func materialize() -> State {
+            switch self {
+            case .loading: return .loading
+            case .loaded(let size, let posts, let moreAvailable):
+                let isNotEmpty = size.width > 0.0 && size.height > 0.0
+                let nodes = isNotEmpty ? posts.map { SubredditPostTableViewNode(post: $0, width: size.width) } : []
+                
+                return .loaded(nodes: nodes,
+                               moreAvailable: moreAvailable)
+            }
+        }
+    }
+    
+    private var backingState: BackingState = .loading(size: .zero)
     
     enum State {
         case loading
@@ -27,7 +63,7 @@ class SubredditViewModel {
     init(api: RedditAPIType, request: RedditListingRequest) {
         paginator = SubredditPaginator(api: api, request: request)
         title = "Reddit · \(request.path)"
-        nodes = subject
+        state = subject
         paginator.posts
             .observe(on: queue)
             .subscribe(target: self, onNext: { $0.updatePosts($1) })
@@ -35,39 +71,34 @@ class SubredditViewModel {
     }
     
     let title: String
-    let nodes: Observable<State>
+    let state: Observable<State>
     
     func didActivate() {
-        if posts.isEmpty { reload() }
-        else { recalculateNodes() }
+        if case .loading = backingState { reload() }
+        else { self.materializeBackingState() }
     }
     
-    func reload(reset: Bool = true) {
-        paginator.reload(reset: reset)
+    func reload() {
+        paginator.reload()
     }
     
     func loadNext() {
         paginator.loadNext()
     }
     
-    func updateBounds(_ bounds: CGSize) {
-        self.bounds = bounds
-        self.recalculateNodes()
+    func updateSize(_ size: CGSize) {
+        self.backingState = backingState.with(size: size)
+        self.materializeBackingState()
     }
     
     private func updatePosts(_ posts: [RedditPost]) {
-        self.posts = posts
-        self.recalculateNodes()
+        self.backingState = backingState.with(posts: posts, moreAvailable: paginator.hasNext)
+        queue.async(execute: self.materializeBackingState)
     }
     
-    private func recalculateNodes() {
-        let isNotEmpty = self.bounds.width > 0.0 || self.bounds.height > 0.0
-        let width = self.bounds.width
-        let nodes = isNotEmpty ? posts.map { SubredditPostTableViewNode(post: $0, width: width) } : []
-        let actions = { self.subject.onNext(.loaded(nodes: nodes,
-                                                    moreAvailable: self.paginator.hasNext)) }
-        
-        executeOnMain(actions)
+    private func materializeBackingState() {
+        let materializedState = backingState.materialize()
+        executeOnMain { self.subject.onNext(materializedState) }
     }
     
     private let disposeBag = DisposeBag()
