@@ -44,7 +44,6 @@ class SubredditViewController: UITableViewController {
                                                                      api: api,
                                                                      imageManager: imageManager)
         
-        tableView.refreshControl = contentRefreshControl
         tableView.separatorStyle = .none
         tableView.isOpaque = true
         
@@ -68,13 +67,13 @@ class SubredditViewController: UITableViewController {
     private func reload(with state: SubredditViewModel.State) {
         switch state {
         case .loading:
+            self.tableView.refreshControl = nil
             self.moreContentAvailable = true
-            self.contentRefreshControl.isEnabled = false
             
         case .loaded(let nodes, let moreAvailable):
+            self.tableView.refreshControl = contentRefreshControl
             self.nodes = nodes
             self.moreContentAvailable = moreAvailable
-            self.contentRefreshControl.isEnabled = true
             self.contentRefreshControl.endRefreshing()
         }
         self.tableView.reloadData()

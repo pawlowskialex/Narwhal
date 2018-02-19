@@ -24,6 +24,7 @@ class SubredditLoaderFooterView: UITableViewHeaderFooterView {
     
     private func setup() {
         contentView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
     }
     
     override func prepareForReuse() {
