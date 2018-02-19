@@ -436,7 +436,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "$(SRCROOT)/Reddit/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pawlowski.Reddit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -451,7 +451,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "$(SRCROOT)/Reddit/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pawlowski.Reddit;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -21,48 +21,47 @@ class ImageManager: ImageManagerType {
     
     private let session: URLSession
     private let queue = DispatchQueue(label: "org.pawlowski.Reddit.image.downloading", qos: .userInitiated)
-    
     private var cache: [URL : UIImage] = [:]
-    private var lock = Lock()
     
     init(session: URLSession = .shared) {
         self.session = session
     }
     
     func image(`for` url: URL) -> UIImage? {
-        self.lock.lock()
-        defer { self.lock.unlock() }
         return self.cache[url]
     }
     
     func downloadImage(at url: URL, preprocessor: @escaping (UIImage) -> (UIImage)) -> Observable<UIImage> {
         return .create { observer in
-            if let image = self.image(for: url) {
-                observer.onNext(image)
-                observer.onComplete()
-                return Disposable()
+            var subscription: DisposableType? = nil
+            
+            self.queue.async {
+                if let image = self.image(for: url) {
+                    subscription = Observable.value(image).subscribe(target: observer)
+                }
+                else {
+                    let handler = Observer<Data>(
+                        onNext: { data in
+                            if let image = UIImage(data: data) {
+                                let preprocessed = preprocessor(image)
+                                self.cache[url] = preprocessed
+                                observer.onNext(preprocessed)
+                                observer.onComplete()
+                            }
+                            else {
+                                observer.onError(Error.malformedImage)
+                            }
+                        },
+                        onComplete: observer.onComplete,
+                        onError: observer.onError)
+                    
+                    subscription = self.session.data(at: url)
+                        .observe(on: self.queue)
+                        .subscribe(handler)
+                }
             }
             
-            let handler = Observer<Data>(
-                onNext: { data in
-                    if let image = UIImage(data: data) {
-                        let preprocessed = preprocessor(image)
-                        self.lock.lock()
-                        self.cache[url] = preprocessed
-                        self.lock.unlock()
-                        observer.onNext(preprocessed)
-                        observer.onComplete()
-                    }
-                    else {
-                        observer.onError(Error.malformedImage)
-                    }
-                },
-                onComplete: observer.onComplete,
-                onError: observer.onError)
-            
-            return self.session.data(at: url)
-                .observe(on: self.queue)
-                .subscribe(handler)
+            return Disposable { subscription?.dispose() }
         }
     }
 }
